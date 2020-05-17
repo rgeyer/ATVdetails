@@ -57,41 +57,8 @@ EOF
 
 
 ## update db for instance 2
-if [ -z "$MAD_path_2" ]; then
-echo "No second instance defined"
-else
-query(){
-mysql  -u$DB_user -p$DB_pass -NB -h 127.0.0.1 $ATVdetails_db -e "$1;"
-}
-while read -r origin _ ;do
-
-rgc=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=RGC ).*?(?= \|)')
-pogodroid=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD ).*?(?= \|)')
-pogo=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=PoGo ).*?(?= \|)')
-rom=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=ROM ).*?(?=])')
-Update=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=PoGO Autoupdate ).*?(?= \|)')
-Magisk=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=Magisk ).*?(?= )')
-Modules=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=Modules ).*?(?= \|)')
-Eth=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=eth ).*?(?= \|)')
-PD_auth_username=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_auth_username ).*?(?= \|)')
-PD_auth_password=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_auth_password ).*?(?= \|)')
-PD_auth_id=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_auth_id ).*?(?= \|)')
-PD_auth_token=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_auth_token ).*?(?= \|)')
-PD_post_destination=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_post_destination ).*?(?= \|)')
-PD_boot_delay=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_boot_delay ).*?(?= \|)')
-PD_injection_delay=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_injection_delay ).*?(?= \|)')
-RGC_auth_username=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=RGC_auth_username ).*?(?= \|)')
-RGC_auth_password=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=RGC_auth_password ).*?(?= \|)')
-RGC_websocket_uri=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=RGC_websocket_uri ).*?(?= \|)')
-RGC_boot_delay=$(grep -w $origin $MAD_path_2/update_log.json| grep -o -P '(?<=RGC_boot_delay ).*?(?= \|)')
-
-
-if [ "$rgc" != '' ]; then
-   mysql $ATVdetails_db -u$DB_user -p$DB_pass -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$Update', magisk_modules = '$Modules'$
-fi
-
-done < <(query "$(cat << EOF
-select origin FROM ATVdetails;
-EOF
-)")
-fi
+#if [ -z "$MAD_path_2" ]; then
+#echo "No second instance defined"
+#else
+# repeat instance one processing
+#fi
