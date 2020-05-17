@@ -3,18 +3,18 @@
 source config.ini
 
 ## clear MAD update_log and execute job
-#curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/delete_log"
-#curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/install_file_all_devices?jobname=ATVdetails&type=jobType.CHAIN"
+curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/delete_log"
+curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/install_file_all_devices?jobname=ATVdetails&type=jobType.CHAIN"
 
-#if [ -z "$MAD_path_2" ]; then
-#echo "No second instance defined"
-#else
-#curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/delete_log"
-#curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/install_file_all_devices?jobname=ATVdetails&type=jobType.CHAIN"
-#fi
+if [ -z "$MAD_path_2" ]; then
+echo "No second instance defined"
+else
+curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/delete_log"
+curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/install_file_all_devices?jobname=ATVdetails&type=jobType.CHAIN"
+fi
 
 ## wait time for jobs to finish
-#sleep $wait
+sleep $wait
 
 ## Insert Origins into table
 mysql $ATVdetails_db -u$DB_user -p$DB_pass -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
