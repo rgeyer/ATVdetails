@@ -8,4 +8,4 @@ Store some ATV stuff (rom/pd/rgc/pogo/magisk version and subset of PD and RGC se
 4. copy ATVdetails.json to MADfolder/personal_commands/ and Reload existing jobs in MADmin
 5. execute: ``./update`` and/or add it to crontab to run daily
 
-Note: update script will delete everything in MAD update_log.json
+Note: update script will delete everything in MAD update_log.json also make sure no other job is running at the time
