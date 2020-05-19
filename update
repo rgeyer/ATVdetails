@@ -29,7 +29,7 @@ rgc=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=RGC ).*?(
 pogodroid=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD ).*?(?= \|)')
 pogo=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PoGo ).*?(?= \|)')
 rom=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=ROM ).*?(?=])')
-pogo_update=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PoGO_Autoupdate ).*?(?= \|)')
+pogo_update=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PoGo_Autoupdate ).*?(?= \|)')
 rgc_update=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=RGC_Autoupdate ).*?(?= \|)')
 pd_update=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_Autoupdate ).*?(?= \|)')
 pingreboot=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Pingreboot ).*?(?= \|)')
