@@ -30,13 +30,10 @@ pogodroid=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD 
 pogo=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PoGo ).*?(?= \|)')
 rom=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=ROM ).*?(?=])')
 pogo_update=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PoGO_Autoupdate ).*?(?= \|)')
-
 rgc_update=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=RGC_Autoupdate ).*?(?= \|)')
 pd_update=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_Autoupdate ).*?(?= \|)')
 pingreboot=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Pingreboot ).*?(?= \|)')
 temperature=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Temperature ).*?(?= \|)')
-
-Magisk=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Magisk ).*?(?= )')
 Modules=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Modules ).*?(?= \|)')
 Eth=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=eth ).*?(?= \|)')
 PD_auth_username=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_auth_username ).*?(?= \|)')
