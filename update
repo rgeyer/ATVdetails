@@ -34,7 +34,7 @@ rgc_update=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=RG
 pd_update=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_Autoupdate ).*?(?= \|)')
 pingreboot=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Pingreboot ).*?(?= \|)')
 temperature=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Temperature ).*?(?= \|)')
-Magisk=$(grep -w name$origin $MAD_path_2/update_log.json| grep -o -P '(?<=Magisk ).*?(?= )')
+Magisk=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Magisk ).*?(?= )')
 Modules=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Modules ).*?(?= \|)')
 Eth=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=eth ).*?(?= \|)')
 PD_auth_username=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_auth_username ).*?(?= \|)')
