@@ -36,7 +36,8 @@ pingreboot=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Pi
 temperature=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Temperature ).*?(?= \|)')
 Magisk=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Magisk ).*?(?= )')
 Modules=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Modules ).*?(?= \|)')
-Eth=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=eth ).*?(?= \|)')
+IP=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=IP ).*?(?= \|)')
+Gmail=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=Gmail ).*?(?= \|)')
 PD_auth_username=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_auth_username ).*?(?= \|)')
 PD_auth_password=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_auth_password ).*?(?= \|)')
 PD_auth_id=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_auth_id ).*?(?= \|)')
@@ -50,7 +51,7 @@ RGC_websocket_uri=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P 
 RGC_boot_delay=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=RGC_boot_delay ).*?(?= \|)')
 
 if [ "$rgc" != '' ]; then
-   mysql $ATVdetails_db -u$DB_user -p$DB_pass -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$pogo_update', rgc_update = '$rgc_update', pd_update = '$pd_update', pingreboot = '$pingreboot', temperature = '$temperature', magisk_modules = '$Modules', eth0 = '$Eth', PD_auth_username = '$PD_auth_username', PD_auth_password = '$PD_auth_password', PD_auth_id = '$PD_auth_id', PD_auth_token = '$PD_auth_token', PD_post_destination = '$PD_post_destination', PD_boot_delay = '$PD_boot_delay', PD_injection_delay = '$PD_injection_delay', RGC_auth_username = '$RGC_auth_username', RGC_auth_password = '$RGC_auth_password', RGC_websocket_uri = '$RGC_websocket_uri', RGC_boot_delay = '$RGC_boot_delay' WHERE origin = '$origin' and date = curdate();"
+   mysql $ATVdetails_db -u$DB_user -p$DB_pass -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$pogo_update', rgc_update = '$rgc_update', pd_update = '$pd_update', pingreboot = '$pingreboot', temperature = '$temperature', magisk_modules = '$Modules', IP = '$IP', Gmail = '$Gmail', PD_auth_username = '$PD_auth_username', PD_auth_password = '$PD_auth_password', PD_auth_id = '$PD_auth_id', PD_auth_token = '$PD_auth_token', PD_post_destination = '$PD_post_destination', PD_boot_delay = '$PD_boot_delay', PD_injection_delay = '$PD_injection_delay', RGC_auth_username = '$RGC_auth_username', RGC_auth_password = '$RGC_auth_password', RGC_websocket_uri = '$RGC_websocket_uri', RGC_boot_delay = '$RGC_boot_delay' WHERE origin = '$origin' and date = curdate();"
 fi
 
 done < <(query "$(cat << EOF
