@@ -3,6 +3,7 @@
 source config.ini
 
 ## clear MAD update_log and execute job
+cp ATVdetails.json $MAD_path_1/personal_commands/
 curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/delete_log"
 curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/reload_jobs"
 curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/install_file_all_devices?jobname=ATVdetails&type=jobType.CHAIN"
@@ -10,6 +11,7 @@ curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/install_file_all_devic
 if [ -z "$MAD_path_2" ]; then
 echo "No second instance defined"
 else
+cp ATVdetails.json $MAD_path_2/personal_commands/
 curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/delete_log"
 curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/reload_jobs"
 curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/install_file_all_devices?jobname=ATVdetails&type=jobType.CHAIN"
