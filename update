@@ -21,16 +21,16 @@ fi
 sleep $wait
 
 ## Insert Origins into table
-mysql $ATVdetails_db -u$DB_user -p$DB_pass -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
+mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
 
 ## update db for instance 1
 if [ -z "$MAD_path_1" ]; then
         echo "No instance defined"
 else
-        mysql $ATVdetails_db -u$DB_user -p$DB_pass -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
+        mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
 
         query(){
-        mysql  -u$DB_user -p$DB_pass -NB -h 127.0.0.1 $ATVdetails_db -e "$1;"
+        mysql  -u$DB_user -p$DB_pass -NB -h$DB_IP $ATVdetails_db -e "$1;"
         }
         while read -r origin _ ;do
         rgc=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=RGC ).*?(?= \|)')
@@ -59,7 +59,7 @@ else
         RGC_boot_delay=$(grep -w name$origin $MAD_path_1/update_log.json| grep -o -P '(?<=RGC_boot_delay ).*?(?= \|)')
 
         if [ "$rgc" != '' ]; then
-                mysql $ATVdetails_db -u$DB_user -p$DB_pass -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$pogo_update', rgc_update = '$rgc_update', pd_update = '$pd_update', pingreboot = '$pingreboot', temperature = '$temperature', magisk_modules = '$Modules', ip = '$IP', gmail = '$Gmail', PD_auth_username = '$PD_auth_username', PD_auth_password = '$PD_auth_password', PD_auth_id = '$PD_auth_id', PD_auth_token = '$PD_auth_token', PD_post_destination = '$PD_post_destination', PD_boot_delay = '$PD_boot_delay', PD_injection_delay = '$PD_injection_delay', RGC_auth_username = '$RGC_auth_username', RGC_auth_password = '$RGC_auth_password', RGC_websocket_uri = '$RGC_websocket_uri', RGC_boot_delay = '$RGC_boot_delay' WHERE origin = '$origin' and date = curdate();"
+                mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$pogo_update', rgc_update = '$rgc_update', pd_update = '$pd_update', pingreboot = '$pingreboot', temperature = '$temperature', magisk_modules = '$Modules', ip = '$IP', gmail = '$Gmail', PD_auth_username = '$PD_auth_username', PD_auth_password = '$PD_auth_password', PD_auth_id = '$PD_auth_id', PD_auth_token = '$PD_auth_token', PD_post_destination = '$PD_post_destination', PD_boot_delay = '$PD_boot_delay', PD_injection_delay = '$PD_injection_delay', RGC_auth_username = '$RGC_auth_username', RGC_auth_password = '$RGC_auth_password', RGC_websocket_uri = '$RGC_websocket_uri', RGC_boot_delay = '$RGC_boot_delay' WHERE origin = '$origin' and date = curdate();"
         fi
         done < <(query "select origin FROM ATVdetails;")
 fi
@@ -69,10 +69,10 @@ fi
 if [ -z "$MAD_path_2" ]; then
         echo "No 2nd instance defined"
 else
-        mysql $ATVdetails_db -u$DB_user -p$DB_pass -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
+        mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
 
         query(){
-        mysql  -u$DB_user -p$DB_pass -NB -h 127.0.0.1 $ATVdetails_db -e "$1;"
+        mysql  -u$DB_user -p$DB_pass -NB -h$DB_IP  $ATVdetails_db -e "$1;"
         }
         while read -r origin _ ;do
         rgc=$(grep -w name$origin $MAD_path_2/update_log.json| grep -o -P '(?<=RGC ).*?(?= \|)')
@@ -100,7 +100,7 @@ else
         RGC_websocket_uri=$(grep -w name$origin $MAD_path_2/update_log.json| grep -o -P '(?<=RGC_websocket_uri ).*?(?= \|)')
         RGC_boot_delay=$(grep -w name$origin $MAD_path_2/update_log.json| grep -o -P '(?<=RGC_boot_delay ).*?(?= \|)')
                 if [ "$rgc" != '' ]; then
-                        mysql $ATVdetails_db -u$DB_user -p$DB_pass -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$pogo_update', rgc_update = '$rgc_update', pd_update = '$pd_update', pingreboot = '$pingreboot', temperature = '$temperature', magisk_modules = '$Modules', ip = '$IP', gmail = '$Gmail', PD_auth_username = '$PD_auth_username', PD_auth_password = '$PD_auth_password', PD_auth_id = '$PD_auth_id', PD_auth_token = '$PD_auth_token', PD_post_destination = '$PD_post_destination', PD_boot_delay = '$PD_boot_delay', PD_injection_delay = '$PD_injection_delay', RGC_auth_username = '$RGC_auth_username', RGC_auth_password = '$RGC_auth_password', RGC_websocket_uri = '$RGC_websocket_uri', RGC_boot_delay = '$RGC_boot_delay' WHERE origin = '$origin' and date = curdate();"
+                        mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$pogo_update', rgc_update = '$rgc_update', pd_update = '$pd_update', pingreboot = '$pingreboot', temperature = '$temperature', magisk_modules = '$Modules', ip = '$IP', gmail = '$Gmail', PD_auth_username = '$PD_auth_username', PD_auth_password = '$PD_auth_password', PD_auth_id = '$PD_auth_id', PD_auth_token = '$PD_auth_token', PD_post_destination = '$PD_post_destination', PD_boot_delay = '$PD_boot_delay', PD_injection_delay = '$PD_injection_delay', RGC_auth_username = '$RGC_auth_username', RGC_auth_password = '$RGC_auth_password', RGC_websocket_uri = '$RGC_websocket_uri', RGC_boot_delay = '$RGC_boot_delay' WHERE origin = '$origin' and date = curdate();"
                 fi
         done < <(query "select origin FROM ATVdetails;")
 fi

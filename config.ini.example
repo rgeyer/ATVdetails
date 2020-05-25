@@ -1,6 +1,7 @@
 # DB
 MAD_db=rmdb
 ATVdetails_db=pogodb
+DB_IP=127.0.0.1
 DB_user=someuser
 DB_pass=somepass
 
