@@ -16,6 +16,7 @@ CREATE TABLE `ATVdetails` (
   `gmail` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `PD_auth_username` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `PD_auth_password` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `PD_user_id` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `PD_auth_id` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `PD_auth_token` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `PD_post_destination` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
