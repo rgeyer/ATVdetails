@@ -5,6 +5,5 @@ add column IF NOT EXISTS `pingreboot` varchar(40) COLLATE utf8mb4_unicode_ci DEF
 add column IF NOT EXISTS `temperature` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after pingreboot,
 change column IF EXISTS `eth0` ip varchar(40),
 add column IF NOT EXISTS `gmail` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after ip,
-add column IF NOT EXISTS `PD_user_id` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_auth_password,
-change column IF EXISTS `PD_user_id` PD_user_login varchar(40)
+add column IF NOT EXISTS `PD_user_login` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_auth_password,
 ;
