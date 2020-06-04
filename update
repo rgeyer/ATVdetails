@@ -21,7 +21,7 @@ fi
 sleep $wait
 
 ## Check Columns
-mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP table_update.sql
+mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP < table_update.sql
 
 ## Insert Origins into table
 mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
