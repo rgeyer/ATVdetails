@@ -10,8 +10,10 @@ curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/reload_jobs"
 curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/install_file_all_devices?jobname=ATVdetails&type=jobType.CHAIN"
 
 if [ -z "$MAD_path_2" ]; then
+echo ""
 echo "No second instance defined"
 else
+echo ""
 echo "Starting jobs for instance 2"
 cp ATVdetails.json $MAD_path_2/personal_commands/
 curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/delete_log"
@@ -20,22 +22,27 @@ curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/install_file_all_devic
 fi
 
 ## wait time for jobs to finish
+echo ""
 echo "Wait timer started"
 sleep $wait
 
 ## Check Columns
+echo ""
 echo "Checking for new columns"
 mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP < table_update.sql
 
 ## Insert Origins into table
+echo ""
 echo "Inserting origins into table"
 mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
 
 ## update db for instance 1
 if [ -z "$MAD_path_1" ]; then
-        echo "No instance defined"
+        echo ""
+	echo "No instance defined"
 else
-        echo "Start processing jobs instance 1"
+        echo ""
+	echo "Start processing jobs instance 1"
         mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
 
         query(){
@@ -74,6 +81,7 @@ else
 	PD_switch_send_raw_protos=$(grep -w RGC_websocket_origin=$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_switch_send_raw_protos=).*?(?= )')
 	PD_switch_popup_last_sent=$(grep -w RGC_websocket_origin=$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_switch_popup_last_sent=).*?(?= )')
 	PD_full_daemon=$(grep -w RGC_websocket_origin=$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_full_daemon=).*?(?= )')
+        PD_disable_pogo_freeze_detection=$(grep -w RGC_websocket_origin=$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_disable_pogo_freeze_detection=).*?(?= )')
 	PD_switch_enable_mock_location_patch=$(grep -w RGC_websocket_origin=$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_switch_enable_mock_location_patch=).*?(?= )')
 	PD_last_system_patch_timestamp=$(grep -w RGC_websocket_origin=$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_last_system_patch_timestamp=).*?(?= )')
 	PD_last_sys_inj=$(grep -w RGC_websocket_origin=$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_last_sys_inj=).*?(?= )')
@@ -105,7 +113,7 @@ else
 	RGC_autostart_services=$(grep -w RGC_websocket_origin=$origin $MAD_path_1/update_log.json| grep -o -P '(?<=RGC_autostart_services=).*?(?= )')
 
         if [ "$rgc" != '' ]; then
-                mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$pogo_update', rgc_update = '$rgc_update', pd_update = '$pd_update', pingreboot = '$pingreboot', temperature = '$temperature', magisk_modules = '$Modules', ip = '$IP', gmail = '$Gmail', PD_auth_username = '$PD_auth_username', PD_auth_password = '$PD_auth_password', PD_user_login = '$PD_user_login', PD_auth_id = '$PD_auth_id', PD_auth_token = '$PD_auth_token', PD_post_destination = '$PD_post_destination', PD_boot_delay = '$PD_boot_delay', PD_injection_delay = '$PD_injection_delay', PD_switch_disable_last_sent = '$PD_switch_disable_last_sent', PD_intentional_stop = '$PD_intentional_stop', PD_switch_send_protos = '$PD_switch_send_protos', PD_last_time_injected = '$PD_last_time_injected', PD_switch_disable_external_communication = '$PD_switch_disable_external_communication', PD_last_pid_injected = '$PD_last_pid_injected', PD_switch_enable_oomadj = '$PD_switch_enable_oomadj', PD_switch_enable_auth_header = '$PD_switch_enable_auth_header', PD_switch_send_raw_protos = '$PD_switch_send_raw_protos', PD_switch_popup_last_sent = '$PD_switch_popup_last_sent', PD_full_daemon = '$PD_full_daemon', PD_switch_enable_mock_location_patch = '$PD_switch_enable_mock_location_patch', PD_last_system_patch_timestamp = '$PD_last_system_patch_timestamp', PD_last_sys_inj = '$PD_last_sys_inj', PD_default_mappging_mode = '$PD_default_mappging_mode', PD_switch_setenforce = '$PD_switch_setenforce', PD_post_destination_raw = '$PD_post_destination_raw', PD_session_id = '$PD_session_id', PD_libfilename = '$PD_libfilename', PD_latest_version_known = '$PD_latest_version_known', RGC_auth_username = '$RGC_auth_username', RGC_auth_password = '$RGC_auth_password', RGC_websocket_uri = '$RGC_websocket_uri', RGC_boot_delay = '$RGC_boot_delay', RGC_mediaprojection_previously_started = '$RGC_mediaprojection_previously_started', RGC_suspended_mocking = '$RGC_suspended_mocking', RGC_reset_agps_once = '$RGC_reset_agps_once', RGC_overwrite_fused = '$RGC_overwrite_fused', RGC_switch_enable_auth_header = '$RGC_switch_enable_auth_header', RGC_reset_agps_continuously = '$RGC_reset_agps_continuously', RGC_reset_google_play_services = '$RGC_reset_google_play_services', RGC_last_location_longitude = '$RGC_last_location_longitude', RGC_last_location_altitude = '$RGC_last_location_altitude', RGC_last_location_latitude = '$RGC_last_location_latitude', RGC_boot_startup = '$RGC_boot_startup', RGC_use_mock_location = '$RGC_use_mock_location', RGC_oom_adj_override = '$RGC_oom_adj_override',  RGC_location_reporter_service_running = '$RGC_location_reporter_service_running', RGC_stop_location_provider_service = '$RGC_stop_location_provider_service', RGC_autostart_services = '$RGC_autostart_services'  WHERE origin = '$origin' and date = curdate();"
+                mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$pogo_update', rgc_update = '$rgc_update', pd_update = '$pd_update', pingreboot = '$pingreboot', temperature = '$temperature', magisk_modules = '$Modules', ip = '$IP', gmail = '$Gmail', PD_auth_username = '$PD_auth_username', PD_auth_password = '$PD_auth_password', PD_user_login = '$PD_user_login', PD_auth_id = '$PD_auth_id', PD_auth_token = '$PD_auth_token', PD_post_destination = '$PD_post_destination', PD_boot_delay = '$PD_boot_delay', PD_injection_delay = '$PD_injection_delay', PD_switch_disable_last_sent = '$PD_switch_disable_last_sent', PD_intentional_stop = '$PD_intentional_stop', PD_switch_send_protos = '$PD_switch_send_protos', PD_last_time_injected = '$PD_last_time_injected', PD_switch_disable_external_communication = '$PD_switch_disable_external_communication', PD_last_pid_injected = '$PD_last_pid_injected', PD_switch_enable_oomadj = '$PD_switch_enable_oomadj', PD_switch_enable_auth_header = '$PD_switch_enable_auth_header', PD_switch_send_raw_protos = '$PD_switch_send_raw_protos', PD_switch_popup_last_sent = '$PD_switch_popup_last_sent', PD_full_daemon = '$PD_full_daemon', PD_switch_enable_mock_location_patch = '$PD_switch_enable_mock_location_patch', PD_last_system_patch_timestamp = '$PD_last_system_patch_timestamp', PD_last_sys_inj = '$PD_last_sys_inj', PD_default_mappging_mode = '$PD_default_mappging_mode', PD_switch_setenforce = '$PD_switch_setenforce', PD_post_destination_raw = '$PD_post_destination_raw', PD_session_id = '$PD_session_id', PD_libfilename = '$PD_libfilename', PD_latest_version_known = '$PD_latest_version_known', PD_disable_pogo_freeze_detection = '$PD_disable_pogo_freeze_detection', RGC_auth_username = '$RGC_auth_username', RGC_auth_password = '$RGC_auth_password', RGC_websocket_uri = '$RGC_websocket_uri', RGC_boot_delay = '$RGC_boot_delay', RGC_mediaprojection_previously_started = '$RGC_mediaprojection_previously_started', RGC_suspended_mocking = '$RGC_suspended_mocking', RGC_reset_agps_once = '$RGC_reset_agps_once', RGC_overwrite_fused = '$RGC_overwrite_fused', RGC_switch_enable_auth_header = '$RGC_switch_enable_auth_header', RGC_reset_agps_continuously = '$RGC_reset_agps_continuously', RGC_reset_google_play_services = '$RGC_reset_google_play_services', RGC_last_location_longitude = '$RGC_last_location_longitude', RGC_last_location_altitude = '$RGC_last_location_altitude', RGC_last_location_latitude = '$RGC_last_location_latitude', RGC_boot_startup = '$RGC_boot_startup', RGC_use_mock_location = '$RGC_use_mock_location', RGC_oom_adj_override = '$RGC_oom_adj_override',  RGC_location_reporter_service_running = '$RGC_location_reporter_service_running', RGC_stop_location_provider_service = '$RGC_stop_location_provider_service', RGC_autostart_services = '$RGC_autostart_services'  WHERE origin = '$origin' and date = curdate();"
         fi
         done < <(query "select origin FROM ATVdetails;")
 fi
@@ -113,8 +121,10 @@ fi
 
 ## update db for instance 2
 if [ -z "$MAD_path_2" ]; then
-        echo "No 2nd instance defined"
+        echo ""
+	echo "No 2nd instance defined"
 else
+	echo ""
 	echo "Start processing jobs instance 2"
         mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "insert ignore into ATVdetails (date,origin) select curdate(), name from $MAD_db.settings_device;"
 
@@ -154,6 +164,7 @@ else
         PD_switch_send_raw_protos=$(grep -w RGC_websocket_origin=$origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_switch_send_raw_protos=).*?(?= )')
         PD_switch_popup_last_sent=$(grep -w RGC_websocket_origin=$origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_switch_popup_last_sent=).*?(?= )')
         PD_full_daemon=$(grep -w RGC_websocket_origin=$origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_full_daemon=).*?(?= )')
+        PD_disable_pogo_freeze_detection=$(grep -w RGC_websocket_origin=$origin $MAD_path_1/update_log.json| grep -o -P '(?<=PD_disable_pogo_freeze_detection=).*?(?= )')
         PD_switch_enable_mock_location_patch=$(grep -w RGC_websocket_origin=$origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_switch_enable_mock_location_patch=).*?(?= )')
         PD_last_system_patch_timestamp=$(grep -w RGC_websocket_origin=$origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_last_system_patch_timestamp=).*?(?= )')
         PD_last_sys_inj=$(grep -w RGC_websocket_origin=$origin $MAD_path_2/update_log.json| grep -o -P '(?<=PD_last_sys_inj=).*?(?= )')
@@ -184,8 +195,9 @@ else
         RGC_stop_location_provider_service=$(grep -w RGC_websocket_origin=$origin $MAD_path_2/update_log.json| grep -o -P '(?<=RGC_stop_location_provider_service=).*?(?= )')
         RGC_autostart_services=$(grep -w RGC_websocket_origin=$origin $MAD_path_2/update_log.json| grep -o -P '(?<=RGC_autostart_services=).*?(?= )')
 	        if [ "$rgc" != '' ]; then
-        	        mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$pogo_update', rgc_update = '$rgc_update', pd_update = '$pd_update', pingreboot = '$pingreboot', temperature = '$temperature', magisk_modules = '$Modules', ip = '$IP', gmail = '$Gmail', PD_auth_username = '$PD_auth_username', PD_auth_password = '$PD_auth_password', PD_user_login = '$PD_user_login', PD_auth_id = '$PD_auth_id', PD_auth_token = '$PD_auth_token', PD_post_destination = '$PD_post_destination', PD_boot_delay = '$PD_boot_delay', PD_injection_delay = '$PD_injection_delay', PD_switch_disable_last_sent = '$PD_switch_disable_last_sent', PD_intentional_stop = '$PD_intentional_stop', PD_switch_send_protos = '$PD_switch_send_protos', PD_last_time_injected = '$PD_last_time_injected', PD_switch_disable_external_communication = '$PD_switch_disable_external_communication', PD_last_pid_injected = '$PD_last_pid_injected', PD_switch_enable_oomadj = '$PD_switch_enable_oomadj', PD_switch_enable_auth_header = '$PD_switch_enable_auth_header', PD_switch_send_raw_protos = '$PD_switch_send_raw_protos', PD_switch_popup_last_sent = '$PD_switch_popup_last_sent', PD_full_daemon = '$PD_full_daemon', PD_switch_enable_mock_location_patch = '$PD_switch_enable_mock_location_patch', PD_last_system_patch_timestamp = '$PD_last_system_patch_timestamp', PD_last_sys_inj = '$PD_last_sys_inj', PD_default_mappging_mode = '$PD_default_mappging_mode', PD_switch_setenforce = '$PD_switch_setenforce', PD_post_destination_raw = '$PD_post_destination_raw', PD_session_id = '$PD_session_id', PD_libfilename = '$PD_libfilename', PD_latest_version_known = '$PD_latest_version_known', RGC_auth_username = '$RGC_auth_username', RGC_auth_password = '$RGC_auth_password', RGC_websocket_uri = '$RGC_websocket_uri', RGC_boot_delay = '$RGC_boot_delay', RGC_mediaprojection_previously_started = '$RGC_mediaprojection_previously_started', RGC_suspended_mocking = '$RGC_suspended_mocking', RGC_reset_agps_once = '$RGC_reset_agps_once', RGC_overwrite_fused = '$RGC_overwrite_fused', RGC_switch_enable_auth_header = '$RGC_switch_enable_auth_header', RGC_reset_agps_continuously = '$RGC_reset_agps_continuously', RGC_reset_google_play_services = '$RGC_reset_google_play_services', RGC_last_location_longitude = '$RGC_last_location_longitude', RGC_last_location_altitude = '$RGC_last_location_altitude', RGC_last_location_latitude = '$RGC_last_location_latitude', RGC_boot_startup = '$RGC_boot_startup', RGC_use_mock_location = '$RGC_use_mock_location', RGC_oom_adj_override = '$RGC_oom_adj_override',  RGC_location_reporter_service_running = '$RGC_location_reporter_service_running', RGC_stop_location_provider_service = '$RGC_stop_location_provider_service', RGC_autostart_services = '$RGC_autostart_services'  WHERE origin = '$origin' and date = curdate();"
+        	        mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP -N -e "UPDATE ATVdetails set rgc = '$rgc', pogodroid = '$pogodroid', pogo = '$pogo', rom = '$rom', magisk = '$Magisk', pogo_update = '$pogo_update', rgc_update = '$rgc_update', pd_update = '$pd_update', pingreboot = '$pingreboot', temperature = '$temperature', magisk_modules = '$Modules', ip = '$IP', gmail = '$Gmail', PD_auth_username = '$PD_auth_username', PD_auth_password = '$PD_auth_password', PD_user_login = '$PD_user_login', PD_auth_id = '$PD_auth_id', PD_auth_token = '$PD_auth_token', PD_post_destination = '$PD_post_destination', PD_boot_delay = '$PD_boot_delay', PD_injection_delay = '$PD_injection_delay', PD_switch_disable_last_sent = '$PD_switch_disable_last_sent', PD_intentional_stop = '$PD_intentional_stop', PD_switch_send_protos = '$PD_switch_send_protos', PD_last_time_injected = '$PD_last_time_injected', PD_switch_disable_external_communication = '$PD_switch_disable_external_communication', PD_last_pid_injected = '$PD_last_pid_injected', PD_switch_enable_oomadj = '$PD_switch_enable_oomadj', PD_switch_enable_auth_header = '$PD_switch_enable_auth_header', PD_switch_send_raw_protos = '$PD_switch_send_raw_protos', PD_switch_popup_last_sent = '$PD_switch_popup_last_sent', PD_full_daemon = '$PD_full_daemon', PD_switch_enable_mock_location_patch = '$PD_switch_enable_mock_location_patch', PD_last_system_patch_timestamp = '$PD_last_system_patch_timestamp', PD_last_sys_inj = '$PD_last_sys_inj', PD_default_mappging_mode = '$PD_default_mappging_mode', PD_switch_setenforce = '$PD_switch_setenforce', PD_post_destination_raw = '$PD_post_destination_raw', PD_session_id = '$PD_session_id', PD_libfilename = '$PD_libfilename', PD_latest_version_known = '$PD_latest_version_known', PD_disable_pogo_freeze_detection = '$PD_disable_pogo_freeze_detection', RGC_auth_username = '$RGC_auth_username', RGC_auth_password = '$RGC_auth_password', RGC_websocket_uri = '$RGC_websocket_uri', RGC_boot_delay = '$RGC_boot_delay', RGC_mediaprojection_previously_started = '$RGC_mediaprojection_previously_started', RGC_suspended_mocking = '$RGC_suspended_mocking', RGC_reset_agps_once = '$RGC_reset_agps_once', RGC_overwrite_fused = '$RGC_overwrite_fused', RGC_switch_enable_auth_header = '$RGC_switch_enable_auth_header', RGC_reset_agps_continuously = '$RGC_reset_agps_continuously', RGC_reset_google_play_services = '$RGC_reset_google_play_services', RGC_last_location_longitude = '$RGC_last_location_longitude', RGC_last_location_altitude = '$RGC_last_location_altitude', RGC_last_location_latitude = '$RGC_last_location_latitude', RGC_boot_startup = '$RGC_boot_startup', RGC_use_mock_location = '$RGC_use_mock_location', RGC_oom_adj_override = '$RGC_oom_adj_override',  RGC_location_reporter_service_running = '$RGC_location_reporter_service_running', RGC_stop_location_provider_service = '$RGC_stop_location_provider_service', RGC_autostart_services = '$RGC_autostart_services'  WHERE origin = '$origin' and date = curdate();"
                 fi
         done < <(query "select origin FROM ATVdetails;")
 fi
+echo ""
 echo "Finished"

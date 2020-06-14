@@ -26,6 +26,7 @@ add column IF NOT EXISTS `PD_post_destination_raw` varchar(40) COLLATE utf8mb4_u
 add column IF NOT EXISTS `PD_session_id` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_post_destination_raw,
 add column IF NOT EXISTS `PD_libfilename` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_session_id,
 add column IF NOT EXISTS `PD_latest_version_known` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_libfilename,
+add column IF NOT EXISTS `PD_disable_pogo_freeze_detection` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_latest_version_known,
 add column IF NOT EXISTS `RGC_mediaprojection_previously_started` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after RGC_boot_delay,
 add column IF NOT EXISTS `RGC_suspended_mocking` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after RGC_mediaprojection_previously_started,
 add column IF NOT EXISTS `RGC_reset_agps_once` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after RGC_suspended_mocking,
