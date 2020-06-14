@@ -1,3 +1,4 @@
+-- SET SESSION innodb_strict_mode=OFF;
 alter table ATVdetails
 add column IF NOT EXISTS `pd_update` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after pogo_update,
 add column IF NOT EXISTS `rgc_update` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after pd_update,
@@ -44,3 +45,4 @@ add column IF NOT EXISTS `RGC_location_reporter_service_running` varchar(40) COL
 add column IF NOT EXISTS `RGC_stop_location_provider_service` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after RGC_location_reporter_service_running,
 add column IF NOT EXISTS `RGC_autostart_services` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after RGC_stop_location_provider_service
 ;
+-- SET SESSION innodb_strict_mode=ON;
