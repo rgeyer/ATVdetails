@@ -1,11 +1,14 @@
--- SET SESSION innodb_strict_mode=OFF;
+SET SESSION innodb_strict_mode=OFF;
 alter table ATVdetails
 add column IF NOT EXISTS `pd_update` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after pogo_update,
 add column IF NOT EXISTS `rgc_update` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after pd_update,
 add column IF NOT EXISTS `pingreboot` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after rgc_update,
 add column IF NOT EXISTS `temperature` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after pingreboot,
+change column IF EXISTS `origin` origin varchar(50),
 change column IF EXISTS `eth0` ip varchar(40),
-add column IF NOT EXISTS `gmail` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after ip,
+change column IF EXISTS `magisk_modules` magisk_modules varchar(200),
+add column IF NOT EXISTS `gmail` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL after ip,
+change column IF EXISTS `gmail` gmail varchar(60),
 add column IF NOT EXISTS `PD_user_login` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_auth_password,
 add column IF NOT EXISTS `PD_switch_disable_last_sent` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_injection_delay,
 add column IF NOT EXISTS `PD_intentional_stop` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_switch_disable_last_sent,
@@ -23,8 +26,10 @@ add column IF NOT EXISTS `PD_last_system_patch_timestamp` varchar(40) COLLATE ut
 add column IF NOT EXISTS `PD_last_sys_inj` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_last_system_patch_timestamp,
 add column IF NOT EXISTS `PD_default_mappging_mode` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_last_sys_inj,
 add column IF NOT EXISTS `PD_switch_setenforce` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_default_mappging_mode,
-add column IF NOT EXISTS `PD_post_destination_raw` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_switch_setenforce,
-add column IF NOT EXISTS `PD_session_id` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_post_destination_raw,
+add column IF NOT EXISTS `PD_post_destination_raw` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_switch_setenforce,
+change column IF EXISTS `PD_post_destination_raw` PD_post_destination_raw varchar(100),
+add column IF NOT EXISTS `PD_session_id` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_post_destination_raw,
+change column IF EXISTS `PD_session_id` PD_session_id varchar(60),
 add column IF NOT EXISTS `PD_libfilename` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_session_id,
 add column IF NOT EXISTS `PD_latest_version_known` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_libfilename,
 add column IF NOT EXISTS `PD_disable_pogo_freeze_detection` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after PD_latest_version_known,
@@ -43,6 +48,7 @@ add column IF NOT EXISTS `RGC_use_mock_location` varchar(40) COLLATE utf8mb4_uni
 add column IF NOT EXISTS `RGC_oom_adj_override` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after RGC_use_mock_location,
 add column IF NOT EXISTS `RGC_location_reporter_service_running` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after RGC_oom_adj_override,
 add column IF NOT EXISTS `RGC_stop_location_provider_service` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after RGC_location_reporter_service_running,
-add column IF NOT EXISTS `RGC_autostart_services` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after RGC_stop_location_provider_service
+add column IF NOT EXISTS `RGC_autostart_services` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after RGC_stop_location_provider_service,
+change column IF EXISTS `RGC_websocket_uri` RGC_websocket_uri varchar(60)
 ;
--- SET SESSION innodb_strict_mode=ON;
+SET SESSION innodb_strict_mode=ON;

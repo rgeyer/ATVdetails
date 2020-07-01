@@ -30,6 +30,10 @@ sleep $wait
 echo ""
 echo "Checking for new columns"
 mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP < table_update.sql
+echo ""
+echo ""
+echo "if you see error: ERROR 1118 (42000) at line 2: Row size too large. The maximum row size for the used table type, not counting BLOBs, is 8126. This includes storage overhead, check the manual. You have to change some columns to TEXT or BLOBs"
+echo "uncheck first and last line in table_update.sql and restart"
 
 ## Insert Origins into table
 echo ""
