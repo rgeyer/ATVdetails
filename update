@@ -3,7 +3,9 @@
 source config.ini
 
 ## clear MAD update_log and execute job
+echo ""
 echo "Starting jobs for instance 1"
+echo ""
 cp ATVdetails.json $MAD_path_1/personal_commands/
 curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/delete_log"
 curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/reload_jobs"
@@ -11,10 +13,13 @@ curl -u $MADmin_username_1:$MADmin_password_1 "$MAD_url_1/install_file_all_devic
 
 if [ -z "$MAD_path_2" ]; then
 echo ""
+echo ""
 echo "No second instance defined"
 else
 echo ""
+echo ""
 echo "Starting jobs for instance 2"
+echo ""
 cp ATVdetails.json $MAD_path_2/personal_commands/
 curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/delete_log"
 curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/reload_jobs"
@@ -22,6 +27,7 @@ curl -u $MADmin_username_2:$MADmin_password_2 "$MAD_url_2/install_file_all_devic
 fi
 
 ## wait time for jobs to finish
+echo ""
 echo ""
 echo "Wait timer started"
 sleep $wait
@@ -31,9 +37,6 @@ echo ""
 echo "Checking for new columns"
 mysql $ATVdetails_db -u$DB_user -p$DB_pass -h$DB_IP < table_update.sql
 echo ""
-echo ""
-echo "if you see error: ERROR 1118 (42000) at line 2: Row size too large. The maximum row size for the used table type, not counting BLOBs, is 8126. This includes storage overhead, check the manual. You have to change some columns to TEXT or BLOBs"
-echo "uncheck first and last line in table_update.sql and restart"
 
 ## Insert Origins into table
 echo ""
