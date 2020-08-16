@@ -1,5 +1,6 @@
 SET SESSION innodb_strict_mode=OFF;
 alter table ATVdetails
+add column IF NOT EXISTS `arch` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after origin,
 add column IF NOT EXISTS `pd_update` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after pogo_update,
 add column IF NOT EXISTS `rgc_update` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after pd_update,
 add column IF NOT EXISTS `pingreboot` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL after rgc_update,
