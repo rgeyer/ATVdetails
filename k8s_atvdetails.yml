@@ -1,0 +1,61 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: atvdetails
+  namespace: mad
+spec:
+  schedule: "0 */2 * * *"
+  suspend: false
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    metadata:
+      generateName: atvdetails
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          volumes:
+          - name: madbelog
+            persistentVolumeClaim:
+              claimName: madbelog
+          containers:
+          - image: atvdetails
+            imagePullPolicy: Never
+            name: atvdetails
+            workingDir: /usr/src/app
+            command:
+            - /usr/src/app/update
+            volumeMounts:
+            - mountPath: /mad/logs
+              name: madbelog
+            env:
+            - name: MAD_path_1
+              value: /mad/logs
+            - name: MAD_url_1
+              value: http://madbe:5000
+            - name: MADmin_username_1
+              valueFrom:
+                secretKeyRef:
+                  name: atvdetails
+                  key: maduser
+            - name: MADmin_password_1
+              valueFrom:
+                secretKeyRef:
+                  name: atvdetails
+                  key: madpass
+            - name: DB_IP
+              value: mariadb
+            - name: MAD_db
+              value: madpoc
+            - name: ATVdetails_db
+              value: madpoc
+            - name: DB_user
+              valueFrom:
+                secretKeyRef:
+                  name: atvdetails
+                  key: dbuser
+            - name: DB_pass
+              valueFrom:
+                secretKeyRef:
+                  name: atvdetails
+                  key: dbpass
